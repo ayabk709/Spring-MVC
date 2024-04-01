@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<!--// utilisez Thymeleaf en tant que moteur de template-->
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel = "stylesheet " href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
+    <link rel = "stylesheet " href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
+
+
+
+</head>
+<body>
+<!--//pading-->
+<div class="p-3">
+    <div class="card">
+        <div class="card-header">
+            liste Patients
+        </div>
+        <div class="card-body">
+          <!--  pour chercher un patient ///// index c est un endpoint-->
+<form method="get" th:action="@{/index}" class="form-inline">
+    <label class="sr-only">Keyword:</label>
+   <!-- on trouve motCle dans le URL
+   orsque la page est chargée dans le navigateur, le champ de saisie de
+   texte aura déjà une valeur
+   pré-remplie avec la valeur fournie par l'attribut th:value.
+   -->
+    <input type="text" name="motCle" th:value="${motCle}" >
+    <button type="submit" class="btn btn-info"><i class=" bi bi-search"></i></button>
+</form>
+            <form method="get" th:action="@{/index}" class="form-inline">
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="malade" id="maladeTous" value="" th:checked="${malade == null}">
+                    <label class="form-check-label" for="maladeTous">Tous</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="malade" id="maladeTrue" value="true" th:checked="${malade == true}">
+                    <label class="form-check-label" for="maladeTrue">Oui</label>
+                </div>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" type="radio" name="malade" id="maladeFalse" value="false" th:checked="${malade == false}">
+                    <label class="form-check-label" for="maladeFalse">Non</label>
+                </div>
+                <button type="submit" class="btn btn-info" style="margin-top: 5px"><i class="bi bi-filter"></i> Filtrer par Maladie</button>
+            </form>
+
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nom</th>
+                    <th>Date de naissance</th>
+                    <th>malade</th>
+                    <th>score</th>
+
+                </tr>
+
+                </thead>
+                <tr th:each="p:${patients}">
+                    <td th:text="${p.id}">Id</td>
+                    <td th:text="${p.nom}">Nom</td>
+                    <td th:text="${p.dateNaissance}">Date de naissance</td>
+                    <td th:text="${p.malade}">malade</td>
+                    <td th:text="${p.score}">score</td>
+
+           <!--         suppression
+-->
+                    <td>
+                        <a class="btn btn-danger" onclick ="javascript:return confirm('tes sure')" th:href="@{delete(id=${p.id},motCle=${motCle},page=${currentPage})}">
+                            <i class=" bi bi-trash"></i></a>
+                    </td>
+                </tr>
+            </table>
+            <!--pour ne pas affichr 0 , je veux afficher index qui est le numer de l'element dans la liste
+-->        <!-- il affiche dans le meme ligne  -->
+            <ul class="nav nav-pills">
+               <li th:each="value,item:${page}">
+                  <!-- pur nous envoyer vers une page-->
+                   <!--      pour specifier la couleur de la page courante-->
+                     <a th:href="@{/index(page=${item.index},motCle=${motCle},malade=${malade})}  "
+                        th:class="${currentPage==item.index}? 'btn btn-info ms-1' : 'btn btn-outline-info ms-1'"
+                        th:text="${item.index}">
+
+                     </a>
+
+                   <!--ms-1 est pour espace -->
+               </li>
+            </ul>
+               </div>
+</div>
+
+</div>
+</body>
+</html>
