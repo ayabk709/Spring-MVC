@@ -19,6 +19,7 @@ public class Tp3partie1Application implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+
       /*  patientRepisitory.save(new Patient(null, "Aya", new Date(), false, 10));
         patientRepisitory.save(new Patient(null, "bk", new Date(), true, 20));
         patientRepisitory.save(new Patient(null, "Ali", new Date(), false, 30));

@@ -1,16 +1,18 @@
 <!DOCTYPE html>
 <!--// utilisez Thymeleaf en tant que moteur de template-->
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="template1">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel = "stylesheet " href="/webjars/bootstrap/5.2.3/css/bootstrap.min.css">
     <link rel = "stylesheet " href="/webjars/bootstrap-icons/1.11.3/font/bootstrap-icons.css">
-
-
-
 </head>
 <body>
+<div layout:fragment="content1">
+
 <!--//pading-->
 <div class="p-3">
     <div class="card">
@@ -70,6 +72,12 @@
                         <a class="btn btn-danger" onclick ="javascript:return confirm('tes sure')" th:href="@{delete(id=${p.id},motCle=${motCle},page=${currentPage})}">
                             <i class=" bi bi-trash"></i></a>
                     </td>
+                    <td>
+                        <a class="btn btn-success" th:href="@{/editPatients(id=${p.id},motCle=${motCle},page=${currentPage})}">
+                            <i class="bi bi-pencil"></i>
+                        </a>
+
+                    </td>
                 </tr>
             </table>
             <!--pour ne pas affichr 0 , je veux afficher index qui est le numer de l'element dans la liste
@@ -91,5 +99,7 @@
 </div>
 
 </div>
+</div>
+
 </body>
 </html>
